@@ -1,5 +1,5 @@
 {
-  description = "DBeaver.app flake wrapper";
+  description = "DBeaver flake wrapper";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05";
@@ -15,18 +15,8 @@
         };
 
         dbeaver = pkgs.dbeaver-bin;
-
-        appBundle = pkgs.buildApp {
-          name = "DBeaver";
-          program = "${dbeaver}/bin/dbeaver";
-        };
       in {
-        packages.${system}.default = appBundle;
-
-        apps.${system}.default = {
-          type = "app";
-          program = "${appBundle}/Applications/DBeaver.app/Contents/MacOS/DBeaver";
-        };
+        packages.${system}.default = dbeaver;
       }
     );
 }
