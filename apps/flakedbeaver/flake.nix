@@ -1,5 +1,5 @@
 {
-  description = "DBeaver.app wrapper using Nix";
+  description = "DBeaver app wrapper using Nix";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05";
@@ -27,14 +27,10 @@
           program = "${dbeaver}/bin/dbeaver";
         };
       in {
-        # ✅ Important: expose default package
         packages.${system}.default = appBundle;
-
-        # Optional: expose app for nix run
         apps.${system}.default = {
           type = "app";
           program = "${appBundle}/Applications/DBeaver.app/Contents/MacOS/DBeaver";
         };
-      }
-    );
+      });
 }
