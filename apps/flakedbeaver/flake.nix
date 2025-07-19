@@ -1,19 +1,22 @@
 {
-  description = "Flake for DBeaver";
+  description = "Flake for DBeaver using nixpkgs";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05"; # or use `nixos-unstable` for latest
     flake-utils.url = "github:numtide/flake-utils";
   };
 
-  outputs = { self, nixpkgs, flake-utils, ... }:
+  outputs = { self, nixpkgs, flake-utils }:
     flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = import nixpkgs {
           inherit system;
-          config.allowUnfree = true;
         };
       in {
-        packages.${system}.default = pkgs.dbeaver;
+        packages.dbeaver = pkgs.dbeaver;
+
+        devShells.default = pkgs.mkShell {
+          packages = [ pkgs.dbeaver ];
+        };
       });
 }
