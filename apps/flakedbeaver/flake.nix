@@ -1,5 +1,5 @@
 {
-  description = "DBeaver.app wrapper using Nix";
+  description = "DBeaver.app flake wrapper";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05";
@@ -18,10 +18,6 @@
 
         appBundle = pkgs.buildApp {
           name = "DBeaver";
-          icon = pkgs.fetchurl {
-            url = "https://raw.githubusercontent.com/dbeaver/dbeaver/master/plugins/org.jkiss.dbeaver.core/icons/dbeaver256.png";
-            sha256 = "sha256-E6PgklcblsW1p3Vq+oFsFVUypYrPOM4BBOatPUuDqgk=";
-          };
           program = "${dbeaver}/bin/dbeaver";
         };
       in {
