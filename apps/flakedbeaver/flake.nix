@@ -28,13 +28,15 @@
             # Launcher script
             makeWrapper ${dbeaver}/bin/dbeaver $out/Applications/DBeaver.app/Contents/MacOS/DBeaver
 
+            cp ${./icons/dbeaver.icns} $out/Applications/DBeaver.app/Contents/Resources/dbeaver.icns
+
             # Optional: minimal Info.plist for macOS
             cat > $out/Applications/DBeaver.app/Contents/Info.plist <<EOF
             <?xml version="1.0" encoding="UTF-8"?>
             <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
-              "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+                "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
             <plist version="1.0">
-              <dict>
+                <dict>
                 <key>CFBundleName</key>
                 <string>DBeaver</string>
                 <key>CFBundleExecutable</key>
@@ -45,7 +47,9 @@
                 <string>${dbeaver.version}</string>
                 <key>CFBundlePackageType</key>
                 <string>APPL</string>
-              </dict>
+                <key>CFBundleIconFile</key>
+                <string>dbeaver.icns</string>
+                </dict>
             </plist>
             EOF
           '';
