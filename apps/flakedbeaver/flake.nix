@@ -14,6 +14,6 @@
           config.allowUnfree = true;
         };
       in {
-        packages.${system}.default = pkgs.dbeaver-bin;
+        packages.${system}.default = pkgs.dbeaver;
       });
 }
