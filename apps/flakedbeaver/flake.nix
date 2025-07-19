@@ -1,8 +1,8 @@
 {
-  description = "Flake for DBeaver using nixpkgs";
+  description = "Flake that provides DBeaver";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05"; # or use `nixos-unstable` for latest
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05"; # or unstable
     flake-utils.url = "github:numtide/flake-utils";
   };
 
@@ -13,8 +13,16 @@
           inherit system;
         };
       in {
+        # For `nix run .`
+        apps.default = {
+          type = "app";
+          program = "${pkgs.dbeaver}/bin/dbeaver";
+        };
+
+        # For `nix build .#dbeaver` or `nix profile install .#dbeaver`
         packages.dbeaver = pkgs.dbeaver;
 
+        # For `nix develop`
         devShells.default = pkgs.mkShell {
           packages = [ pkgs.dbeaver ];
         };
