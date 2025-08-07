@@ -4,17 +4,14 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05";
     flake-utils.url = "github:numtide/flake-utils";
-    etcher-pkgs.url = "github:NixOS/nixpkgs/46d7d71026409f4a1d134fd0df3aa803aef2d061";
   };
 
-
-  outputs = { self, nixpkgs, flake-utils, etcher-pkgs }:
+  outputs = { self, nixpkgs, flake-utils }:
     flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = import nixpkgs { inherit system; };
-        etcherPkgs = import etcher-pkgs { inherit system; };
 
-        etcher = etcherPkgs.balena-etcher;
+        etcher = pkgs.balena-etcher;
 
         etcherApp = pkgs.stdenv.mkDerivation {
           pname = "balenaEtcher";
@@ -25,23 +22,26 @@
           unpackPhase = "true";
 
           installPhase = ''
-            mkdir -p $out/Applications/balenaEtcher.app/Contents/MacOS
-            mkdir -p $out/Applications/balenaEtcher.app/Contents/Resources
+            mkdir -p $out/Applications/Etcher.app/Contents/MacOS
+            mkdir -p $out/Applications/Etcher.app/Contents/Resources
 
-            makeWrapper ${etcher}/bin/balena-etcher $out/Applications/balenaEtcher.app/Contents/MacOS/Etcher
+            # Launcher script for the Etcher Electron binary
+            makeWrapper ${etcher}/bin/balena-etcher $out/Applications/Etcher.app/Contents/MacOS/Etcher
 
-            cp ${./icons/etcher.icns} $out/Applications/balenaEtcher.app/Contents/Resources/etcher.icns
+            # Icon file (you must provide this)
+            cp ${./icons/etcher.icns} $out/Applications/Etcher.app/Contents/Resources/etcher.icns
 
-            cat > $out/Applications/balenaEtcher.app/Contents/Info.plist <<EOF
+            # Info.plist metadata
+            cat > $out/Applications/Etcher.app/Contents/Info.plist <<EOF
             <?xml version="1.0" encoding="UTF-8"?>
             <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
               "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
             <plist version="1.0">
               <dict>
                 <key>CFBundleName</key>
-                <string>balenaEtcher</string>
+                <string>Etcher</string>
                 <key>CFBundleExecutable</key>
-                <string>balenaEtcher</string>
+                <string>Etcher</string>
                 <key>CFBundleIdentifier</key>
                 <string>io.balena.etcher</string>
                 <key>CFBundleVersion</key>
