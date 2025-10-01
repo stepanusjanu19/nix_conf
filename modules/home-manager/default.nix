@@ -1,4 +1,8 @@
-{ pkgs, pwnvim, ... }: {
+{
+  pkgs,
+  pwnvim,
+  ...
+}: {
   # Don't change this when you change package input. Leave it alone.
   home.stateVersion = "22.11";
   # specify my home-manager configs

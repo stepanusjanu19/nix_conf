@@ -1,14 +1,13 @@
-{ pkgs, ... }: {
-
+{pkgs, ...}: {
   # Ensure Homebrew-installed Zsh is used
 
   environment = {
-    shells = with pkgs; [ bash zsh ];
+    shells = with pkgs; [bash zsh];
     systemPackages = [
-        pkgs.coreutils
+      pkgs.coreutils
     ];
-    systemPath = [ "/opt/homebrew/bin" ];
-    pathsToLink = [ "/Applications" ];
+    systemPath = ["/opt/homebrew/bin"];
+    pathsToLink = ["/Applications"];
   };
 
   # Enable Homebrew services (like zsh completion)
@@ -16,10 +15,10 @@
     enable = true;
     caskArgs.no_quarantine = true;
     global.brewfile = true;
-    masApps = { };
-    casks = [ "raycast" "amethyst" ];
-    taps = [ "fujiapple852/trippy" ];
-    brews = [ ];
+    masApps = {};
+    casks = ["raycast" "amethyst"];
+    taps = ["fujiapple852/trippy"];
+    brews = [];
   };
 
   nix = {
@@ -34,7 +33,7 @@
   system = {
     keyboard = {
       enableKeyMapping = true;
-      remapCapsLockToEscape = false;  # Keep Caps Lock normal
+      remapCapsLockToEscape = false; # Keep Caps Lock normal
     };
 
     activationScripts.ensureRunDir.text = ''
@@ -59,5 +58,4 @@
   # Fonts
   # fonts.fontDir.enable = true; # DANGER
   # fonts.fonts = [ (pkgs.nerdfonts.override { fonts = [ "Meslo" ]; }) ];
-
 }
